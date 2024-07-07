@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nacho Iannella - UX Product Designer Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #ffffff;
+            --secondary-bg: #1e1e1e;
+            --card-bg: #2c2c2c;
+            --handwriting-font: 'Caveat', cursive;
+        }
+
+        h1 {
+            font-family: var(--handwriting-font);
+            font-weight: 700;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            font-size: 2rem; /* Reduced size */
+            margin: 0;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 0.5s ease forwards;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .theme-toggle {
+            background-color: var(--secondary-bg);
+            border: none;
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        section {
+            margin: 2rem 0; /* Adjusted spacing */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-card .content {
+            padding: 1.5rem;
+        }
+
+        .project-card h3 {
+            margin-top: 0;
+        }
+
+        .project-card p {
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: var(--secondary-bg);
+            color: var(--accent-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background-color: var(--secondary-bg);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            margin: 10% auto;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 80%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            margin-bottom: 1rem;
+        }
+
+        .modal-header img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .modal-body {
+            margin-bottom: 1rem;
+        }
+
+        .close {
+            color: var(--text-color);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--accent-color);
+        }
+
+        /* Light mode styles */
+        body.light-mode {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --accent-color: #4a4a4a;
+            --secondary-bg: #f5f5f5;
+            --card-bg: #ffffff;
+        }
+
+        body.light-mode .project-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .project-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* About section styles */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p:first-of-type {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p:last-of-type {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .about-illustration {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .about-illustration svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .social-links .fa-twitter {
+            color: #1DA1F2;
+        }
+
+        .social-links .fa-linkedin {
+            color: #0A66C2;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                position: relative;
+            }
+
+            h1 {
+                width: 100%;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav ul {
+                justify-content: space-between;
+            }
+
+            .theme-toggle {
+                
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-illustration {
+                max-width: 100%;
+                order: -1;
+            }
+
+            .about-illustration svg {
+                max-width: 200px;
+                margin: 0 auto;
+                display: block;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+        .toggle-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .lang-toggle {
+            background-color: var(--secondary-bg);
+            border: none;
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .lang-toggle:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+        
+
+        @media (max-width: 768px) {
+            .toggle-container {
+                position: absolute;
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Nacho Iannella</h1>
+            <div class="toggle-container">
+                <button class="lang-toggle" onclick="toggleLanguage()">EN</button>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+
+        <div class="social-links">
+            <a href="https://twitter.com/niachito" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://linkedin.com/in/nachoiannella" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+
+        <main>
+            <section id="about">
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>As a <strong>Senior Product UX Designer</strong>, I create intuitive and visually appealing digital experiences. Currently at <strong>Despegar</strong>, I leverage my expertise to design user-friendly solutions that align with business and user needs.</p>
+                        <p>Previously at <strong>Banco Galicia</strong>, I honed my skills across the entire product design process. With a user-centered approach, I aim to solve real problems while maintaining visual excellence. My passion lies in crafting seamless interactions that enhance the overall <strong>user experience</strong>.</p>
+                    </div>
+                    <!--<div class="about-illustration">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+                            <circle cx="250" cy="250" r="200" fill="#4a4a4a" opacity="0.1"/>
+                            <path d="M250 50 L450 250 L250 450 L50 250 Z" fill="#4a4a4a" opacity="0.2"/>
+                            <rect x="150" y="150" width="200" height="200" rx="20" fill="#4a4a4a" opacity="0.3"/>
+                            <circle cx="250" cy="250" r="50" fill="#4a4a4a"/>
+                        </svg>
+                    </div>-->
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2>Featured Projects</h2>
+                <div class="project-grid">
+                    <div class="project-card" onclick="openModal('project1')">
+                        <img src="https://i.ytimg.com/vi/GHAoS3IvGXE/maxresdefault.jpg" alt="SOFIA Asistente Virtual IA">
+                        <div class="content">
+                            <h3>SOFIA - Travel IA Assistant</h3>
+                            <p>SOFIA is a virtual assistant developed from scratch, utilizing generative AI to assist users throughout their entire travel journey, from inspiration to return. I have been involved in all stages of the project, from initial concept to production, and continue to iterate and improve it daily.</p>
+                            <div class="tags">
+                                <span class="tag"><i class="fas fa-search"></i> Research</span>
+                                <span class="tag"><i class="fas fa-pencil-ruler"></i> Wireframing</span>
+                                <span class="tag"><i class="fas fa-magic"></i> Prototyping</span>
+                                <span class="tag"><i class="fas fa-users"></i> User Testing</span>
+                                <span class="tag"><i class="fas fa-paint-brush"></i> UI Design</span>
+                                <span class="tag"><i class="fas fa-redo"></i> Iteration</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="openModal('project2')">
+                        <img src="https://iili.io/dfFh4cX.md.png" alt="Despegar App Modo Viaje">
+                        <div class="content">
+                            <h3>Despegar Travel Mode</h3>
+                            <p>I contributed to the development of the Travel Mode feature for the Despegar app. This native app version activates a Travel Mode by default when users start their journey, providing them with essential travel information, recommendations, products, and simplified access to reservations, even offline. I was involved in all stages of the design process.</p>
+                            <div class="tags">
+                                <span class="tag"><i class="fas fa-search"></i> Research</span>
+                                <span class="tag"><i class="fas fa-pencil-ruler"></i> Wireframing</span>
+                                <span class="tag"><i class="fas fa-magic"></i> Prototyping</span>
+                                <span class="tag"><i class="fas fa-users"></i> User Testing</span>
+                                <span class="tag"><i class="fas fa-paint-brush"></i> UI Design</span>
+                                <span class="tag"><i class="fas fa-redo"></i> Iteration</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="openModal('project3')">
+                        <img src="https://iili.io/dfFp2ee.md.jpg" alt="Banco Galicia seccion seguridad overview de claves">
+                        <div class="content">
+                            <h3>Banco Galicia - Security section</h3>
+                            <p>I contributed to the development of a dedicated security section for the Banco Galicia app. This section organizes and displays all user-related security matters, including passwords, authentication tokens, and security keys, making management easier. I participated in all stages of the design process.</p>
+                            <div class="tags">
+                                <span class="tag"><i class="fas fa-search"></i> Research</span>
+                                <span class="tag"><i class="fas fa-pencil-ruler"></i> Wireframing</span>
+                                <span class="tag"><i class="fas fa-magic"></i> Prototyping</span>
+                                <span class="tag"><i class="fas fa-users"></i> User Testing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="social-links">
+                <a href="https://twitter.com/niachito" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://linkedin.com/in/nachoiannella" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <img id="modalImage" src="" alt="Project Image">
+                <h2 id="modalTitle"></h2>
+            </div>
+            <div class="modal-body">
+                <p id="modalDescription"></p>
+                <div id="modalTags" class="tags"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const themeToggle = document.querySelector('.theme-toggle i');
+            if (document.body.classList.contains('light-mode')) {
+                themeToggle.className = 'fas fa-moon';
+            } else {
+                themeToggle.className = 'fas fa-sun';
+            }
+        }
+
+
+        function openModal(projectId) {
+            const modal = document.getElementById('projectModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalTags = document.getElementById('modalTags');
+
+            // Set project details based on projectId
+            if (projectId === 'project1') {
+                modalImage.src = "https://i.ytimg.com/vi/GHAoS3IvGXE/maxresdefault.jpg";
+                modalTitle.textContent = "SOFIA IA Travel Assistant";
+                modalDescription.textContent = "SOFIA is an innovative virtual assistant designed to revolutionize the travel experience by leveraging generative AI. Created from the ground up, SOFIA guides users through every aspect of their journey, starting from the inspiration phase, planning, booking, traveling, and even post-trip activities. My role encompassed every stage of the project, from the initial brainstorming sessions and concept development to design, testing, and final production. Currently, I am actively involved in the ongoing enhancement of SOFIA, continuously iterating to refine and expand its capabilities, ensuring it remains an invaluable tool for travelers.";
+                modalTags.innerHTML = '<span class="tag"><i class="fas fa-search"></i> Research</span><span class="tag"><i class="fas fa-pencil-ruler"></i> Wireframing</span><span class="tag"><i class="fas fa-magic"></i> Prototyping</span><span class="tag"><i class="fas fa-users"></i> User Testing</span><span class="tag"><i class="fas fa-paint-brush"></i> UI Design</span><span class="tag"><i class="fas fa-redo"></i> Iteration</span>';
+            } else if (projectId === 'project2') {
+                modalImage.src = "https://iili.io/dfFh4cX.md.png";
+                modalTitle.textContent = "App Despegar Modo Viaje";
+                modalDescription.textContent = "I played a key role in the creation of the Travel Mode feature for the Despegar app, a native application enhancement designed to enhance the user experience during their journey. Upon the start of a trip, Travel Mode is activated by default, offering users a range of functionalities tailored to their travel needs. These include personalized recommendations, access to products that can enhance their travel experience, and simplified access to their reservations, even in offline mode. My contributions spanned across all phases of the design process, from initial conceptualization and user research to wireframing, prototyping, user testing, and final implementation. This holistic involvement ensured that the Travel Mode feature is both user-centric and seamlessly integrated into the overall app experience.";
+                modalTags.innerHTML = '<span class="tag"><i class="fas fa-search"></i> Research</span><span class="tag"><i class="fas fa-pencil-ruler"></i> Wireframing</span><span class="tag"><i class="fas fa-magic"></i> Prototyping</span><span class="tag"><i class="fas fa-users"></i> User Testing</span><span class="tag"><i class="fas fa-paint-brush"></i> UI Design</span><span class="tag"><i class="fas fa-redo"></i> Iteration</span>';
+            } else if (projectId === 'project3') {
+                modalImage.src = "https://iili.io/dfFp2ee.md.jpg";
+                modalTitle.textContent = "Banco Galicia - Security Section";
+                modalDescription.textContent = "I played a crucial role in developing a specialized security section for the Banco Galicia app. This section is designed to streamline and enhance the user experience by organizing and displaying all aspects related to security, such as passwords, authentication tokens, and security keys. The aim was to simplify the management of these elements, ensuring that users can easily navigate and handle their security settings. My involvement encompassed every stage of the design process, from initial research and conceptualization through to wireframing, prototyping, user testing, and final implementation. This comprehensive participation ensured that the security section is intuitive, user-friendly, and seamlessly integrated into the app, providing users with a robust and accessible security management tool.";
+                modalTags.innerHTML = '<span class="tag"><i class="fas fa-search"></i> Research</span><span class="tag"><i class="fas fa-pencil-ruler"></i> Wireframing</span><span class="tag"><i class="fas fa-magic"></i> Prototyping</span><span class="tag"><i class="fas fa-users"></i> User Testing</span>';
+            }
+
+            modal.style.display = 'block';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize theme based on user preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            document.body.classList.add('light-mode');
+            document.querySelector('.theme-toggle i').className = 'fas fa-moon';
+        }
+
+        // Listen for changes in color scheme preference
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', event => {
+            if (event.matches) {
+                document.body.classList.add('light-mode');
+                document.querySelector('.theme-toggle i').className = 'fas fa-moon';
+            } else {
+                document.body.classList.remove('light-mode');
+                document.querySelector('.theme-toggle i').className = 'fas fa-sun';
+            }
+        });
+
+        function toggleLanguage() {
+            const langToggle = document.querySelector('.lang-toggle');
+            const currentLang = langToggle.textContent;
+            const newLang = currentLang === 'EN' ? 'ES' : 'EN';
+            langToggle.textContent = newLang;
+
+            // Update text content
+            updateContent(newLang);
+        }
+
+        function updateContent(lang) {
+            const content = {
+                'EN': {
+                    'about': {
+                        'p1': 'As a <strong>Senior Product UX Designer</strong>, I create intuitive and visually appealing digital experiences. Currently at <strong>Despegar</strong>, I leverage my expertise to design user-friendly solutions that align with business and user needs.',
+                        'p2': 'Previously at <strong>Banco Galicia</strong>, I honed my skills across the entire product design process. With a user-centered approach, I aim to solve real problems while maintaining visual excellence. My passion lies in crafting seamless interactions that enhance the overall <strong>user experience</strong>.'
+                    },
+                    'projects': {
+                        'title': 'Featured Projects',
+                        'project1': {
+                            'title': 'SOFIA - Travel IA Assistant',
+                            'description': 'SOFIA is a virtual assistant developed from scratch, utilizing generative AI to assist users throughout their entire travel journey, from inspiration to return. I have been involved in all stages of the project, from initial concept to production, and continue to iterate and improve it daily.'
+                        },
+                        'project2': {
+                            'title': 'Despegar Travel Mode',
+                            'description': 'I contributed to the development of the Travel Mode feature for the Despegar app. This native app version activates a Travel Mode by default when users start their journey, providing them with essential travel information, recommendations, products, and simplified access to reservations, even offline. I was involved in all stages of the design process.'
+                        },
+                        'project3': {
+                            'title': 'Banco Galicia - Security section',
+                            'description': 'I contributed to the development of a dedicated security section for the Banco Galicia app. This section organizes and displays all user-related security matters, including passwords, authentication tokens, and security keys, making management easier. I participated in all stages of the design process.'
+                        }
+                    },
+                    'tags': {
+                        'research': 'Research',
+                        'wireframing': 'Wireframing',
+                        'prototyping': 'Prototyping',
+                        'userTesting': 'User Testing',
+                        'uiDesign': 'UI Design',
+                        'iteration': 'Iteration'
+                    }
+                },
+                'ES': {
+                    'about': {
+                        'p1': 'Como <strong>Diseñador UX de Producto Senior</strong>, creo experiencias digitales intuitivas y visualmente atractivas. Actualmente en <strong>Despegar</strong>, aprovecho mi experiencia para diseñar soluciones amigables que se alinean con las necesidades del negocio y del usuario.',
+                        'p2': 'Anteriormente en <strong>Banco Galicia</strong>, perfeccioné mis habilidades en todo el proceso de diseño de productos. Con un enfoque centrado en el usuario, busco resolver problemas reales manteniendo la excelencia visual. Mi pasión radica en crear interacciones fluidas que mejoren la <strong>experiencia del usuario</strong>.'
+                    },
+                    'projects': {
+                        'title': 'Proyectos Destacados',
+                        'project1': {
+                            'title': 'SOFIA - Asistente IA de Viajes',
+                            'description': 'SOFIA es un asistente virtual desarrollado desde cero, utilizando IA generativa para asistir a los usuarios durante todo su viaje, desde la inspiración hasta el regreso. He estado involucrado en todas las etapas del proyecto, desde el concepto inicial hasta la producción, y continúo iterando y mejorándolo diariamente.'
+                        },
+                        'project2': {
+                            'title': 'Modo Viaje de Despegar',
+                            'description': 'Contribuí al desarrollo de la función Modo Viaje para la aplicación de Despegar. Esta versión de la aplicación nativa activa un Modo Viaje por defecto cuando los usuarios inician su viaje, proporcionándoles información esencial de viaje, recomendaciones, productos y acceso simplificado a las reservas, incluso sin conexión. Estuve involucrado en todas las etapas del proceso de diseño.'
+                        },
+                        'project3': {
+                            'title': 'Banco Galicia - Sección de seguridad',
+                            'description': 'Contribuí al desarrollo de una sección de seguridad dedicada para la aplicación de Banco Galicia. Esta sección organiza y muestra todos los asuntos de seguridad relacionados con el usuario, incluyendo contraseñas, tokens de autenticación y claves de seguridad, facilitando su gestión. Participé en todas las etapas del proceso de diseño.'
+                        }
+                    },
+                    'tags': {
+                        'research': 'Investigación',
+                        'wireframing': 'Wireframing',
+                        'prototyping': 'Prototipado',
+                        'userTesting': 'Pruebas de Usuario',
+                        'uiDesign': 'Diseño UI',
+                        'iteration': 'Iteración'
+                    }
+                }
+            };
+
+            // Update about section
+            document.querySelector('#about .about-text p:first-of-type').innerHTML = content[lang].about.p1;
+            document.querySelector('#about .about-text p:last-of-type').innerHTML = content[lang].about.p2;
+
+            // Update projects section
+            document.querySelector('#projects h2').textContent = content[lang].projects.title;
+
+            // Update project cards
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach((card, index) => {
+                const projectKey = `project${index + 1}`;
+                card.querySelector('h3').textContent = content[lang].projects[projectKey].title;
+                card.querySelector('p').textContent = content[lang].projects[projectKey].description;
+            });
+
+            // Update tags
+            const tags = document.querySelectorAll('.tag');
+            tags.forEach(tag => {
+                const tagKey = tag.textContent.trim().toLowerCase().replace(/\s+/g, '');
+                if (content[lang].tags[tagKey]) {
+                    tag.innerHTML = `<i class="${tag.querySelector('i').className}"></i> ${content[lang].tags[tagKey]}`;
+                }
+            });
+
+            // Update modal content
+            updateModalContent(lang, content);
+        }
+
+        function updateModalContent(lang, content) {
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalTags = document.getElementById('modalTags');
+
+            if (modalTitle.textContent.includes('SOFIA')) {
+                modalTitle.textContent = content[lang].projects.project1.title;
+                modalDescription.textContent = content[lang].projects.project1.description;
+            } else if (modalTitle.textContent.includes('Despegar')) {
+                modalTitle.textContent = content[lang].projects.project2.title;
+                modalDescription.textContent = content[lang].projects.project2.description;
+            } else if (modalTitle.textContent.includes('Galicia')) {
+                modalTitle.textContent = content[lang].projects.project3.title;
+                modalDescription.textContent = content[lang].projects.project3.description;
+            }
+
+            modalTags.querySelectorAll('.tag').forEach(tag => {
+                const tagKey = tag.textContent.trim().toLowerCase().replace(/\s+/g, '');
+                if (content[lang].tags[tagKey]) {
+                    tag.innerHTML = `<i class="${tag.querySelector('i').className}"></i> ${content[lang].tags[tagKey]}`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
