@@ -32,7 +32,7 @@ export const projects = [
     company: "Despegar",
     role: "Senior Product UX Designer",
     year: "2022 - 2023",
-    image: "/images/projects/sofia.jpg",
+    image: "https://i.ytimg.com/vi/GHAoS3IvGXE/maxresdefault.jpg",
     alt: "SOFIA AI Travel Assistant by Despegar",
     summary:
       "Designed from scratch a generative AI travel assistant that guides users through their entire travel journey, from inspiration to return.",
@@ -59,7 +59,7 @@ export const projects = [
     company: "Despegar",
     role: "Senior Product UX Designer",
     year: "2023 - 2024",
-    image: "/images/projects/travel-mode.jpg",
+    image: "https://iili.io/dfFh4cX.md.png",
     alt: "Despegar App Travel Mode Feature",
     summary:
       "Designed a mobile-first feature that activates during trips, giving travelers contextual info, recommendations, and offline access to reservations.",
@@ -86,7 +86,7 @@ export const projects = [
     company: "Banco Galicia",
     role: "Product UX Designer",
     year: "2018 - 2022",
-    image: "/images/projects/banco-galicia.jpg",
+    image: "https://iili.io/dfFp2ee.md.jpg",
     alt: "Banco Galicia Security Section App",
     summary:
       "Designed a unified security hub for the banking app, organizing passwords, tokens, and security keys into an intuitive management experience.",
